@@ -48,6 +48,10 @@ export class LoginPage implements OnInit {
         } else {
           this.presentAlert('Usuário não encontrado', 'Esta email não foi encontrado na base de dados.');
         }
+      })
+      .catch(err =>{
+        this.alertPrompt.dismiss();
+        this.presentAlert('Ops!', 'Aparentemente estamos com probemas na conexão com o servidor. Tente novamente mais tarde');
       });
   }
 
