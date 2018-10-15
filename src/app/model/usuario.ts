@@ -6,7 +6,4 @@ export class Usuario{
     nome: string;
     senha: string;
     idioma: string;
-
-    
-
 }
