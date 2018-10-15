@@ -15,12 +15,12 @@ export class AppComponent {
     {
       title: 'Novo Professor',
       url: '/home',
-      icon: 'home'
+      icon: 'md-person-add'
     },
     {
       title: 'Nova Turma',
       url: '/list',
-      icon: 'list'
+      icon: 'md-add-circle'
     },
     {
       title: 'Lista de Turmas',
@@ -29,18 +29,18 @@ export class AppComponent {
     },
     {
       title: 'Lista de Professores',
-      url: '/list',
+      url: '/protected/professor',
       icon: 'list'
     },
     {
       title: 'Configurações',
-      url: '/list',
-      icon: 'list'
+      url: '/protected/configuracao',
+      icon: 'hammer'
     },
     {
       title: 'Sair',
-      url: '/list',
-      icon: 'list'
+      url: '/protected/sair',
+      icon: 'md-close'
     }
   ];
 

@@ -1,5 +1,9 @@
 <ion-content class="login-content" padding>
 
+  <div class="login-label">
+    Login
+  </div>
+
   <div class="login-box">
     <form>
       <ion-item>
@@ -11,12 +15,12 @@
 
       <ion-row>
         <ion-col class="signup-col">          
-          <ion-button (click)="login()">Logar</ion-button>
+          <ion-button (click)="login()">Entrar</ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <button ion-button (click)="presentAlertPrompt()">Esqueceu sua senha?</button>
+          <button ion-button (click)="presentAlertPrompt()" style="background-color: white">Esqueceu sua senha?</button>
         </ion-col>
       </ion-row>
     </form>

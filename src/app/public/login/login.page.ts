@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
           this.presentAlert('Login não realizado', 'Não foi possível realizar a autenticação. Digite novamente seu usuário e senha.');
         }        
       })
-      .catch(err =>{
+      .catch(err => {
         this.presentAlert('Ops!', 'Aparentemente estamos com probemas na conexão com o servidor. Tente novamente mais tarde');
       });
   }
@@ -49,9 +49,9 @@ export class LoginPage implements OnInit {
           this.presentAlert('Usuário não encontrado', 'Esta email não foi encontrado na base de dados.');
         }
       })
-      .catch(err =>{
+      .catch(err => {
         this.alertPrompt.dismiss();
-        this.presentAlert('Ops!', 'Aparentemente estamos com probemas na conexão com o servidor. Tente novamente mais tarde');
+        this.presentAlert('Ops!', 'Aparentemente estamos com problemas na conexão com o servidor. Tente novamente mais tarde');
       });
   }
 
