@@ -24,7 +24,7 @@ export class AppComponent {
     },
     {
       title: 'Lista de Turmas',
-      url: '/list',
+      url: '/protected/turma',
       icon: 'list'
     },
     {
@@ -35,12 +35,12 @@ export class AppComponent {
     {
       title: 'Configurações',
       url: '/protected/configuracao',
-      icon: 'hammer'
+      icon: 'md-build'
     },
     {
       title: 'Sair',
       url: '/protected/sair',
-      icon: 'md-close'
+      icon: 'md-log-out'
     }
   ];
 

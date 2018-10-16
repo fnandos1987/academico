@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-title>Detalhes da Turma</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Turma: {{turma.nome}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+          <p>Data de Início: {{turma.data_inicio}}</p>
+          <p>Data de Fim: {{turma.data_final}}</p>
+          <p>{{turma.ementa}}</p>
+          <p>Professor: {{turma.professor}}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button (click)="presentAlertConfirm()">Excluir</ion-button>
+
+</ion-content>

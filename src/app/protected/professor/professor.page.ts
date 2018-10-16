@@ -15,6 +15,10 @@ export class ProfessorPage implements OnInit {
   constructor(private profService: ProfessorService) { }
 
   ngOnInit() {
+    this.onLoadListaProfessores();
+  }
+
+  onLoadListaProfessores() {
     this.page = 0;
     this.professores = [];
     this.getProfessores();
@@ -28,19 +32,23 @@ export class ProfessorPage implements OnInit {
     }, 500);
   }
 
+  onInputSearch(event) {
+    const val = event.target.value;    
+    if (val && val.trim() != '') {
+      this.profService.getProfessoresBusca(val)
+        .subscribe(data => {
+          this.professores = data;
+        })
+    } else {
+      this.onLoadListaProfessores();
+    }
+  }
+
   getProfessores() {
     this.profService.getProfessores(this.page)
       .subscribe(data => {
         for (let i in data) {
-          let p = new Professor(
-            data[i].id,
-            data[i].nome,
-            data[i].data_nascto,
-            data[i].foto,
-            data[i].curriculo,
-            data[i].status
-          );
-          this.professores.push(p);
+          this.professores.push(data[i]);          
         }
       })
   }

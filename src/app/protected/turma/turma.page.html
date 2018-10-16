@@ -2,10 +2,13 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Lista de Professores
-    </ion-title>
+      <ion-title>
+        Lista de Turmas
+      </ion-title>
+      <ion-button slot="end" buttonType="bar-button" (click)="novaTurma()">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
   </ion-toolbar>
 </ion-header>
 
@@ -14,8 +17,8 @@
   <ion-searchbar (ionInput)="onInputSearch($event)"></ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let p of professores">
-      {{p.nome}}
+    <ion-item *ngFor="let t of turmas" (click)="showClassDetail(t.id)">
+      {{t.nome}}
     </ion-item>
   </ion-list>
 

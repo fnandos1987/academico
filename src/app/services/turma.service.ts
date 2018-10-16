@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 const SERVER_URL = environment.serverUrl;
@@ -8,16 +7,20 @@ const SERVER_URL = environment.serverUrl;
 @Injectable({
   providedIn: 'root'
 })
-export class ProfessorService {
+export class TurmaService {
 
+  id: any;
   constructor(public http: HttpClient) { }
 
-  getProfessores(page) {
-    return this.http.get(`${SERVER_URL}/professor/listar/${page}`);
+  getTurmas(page) {
+    return this.http.get(`${SERVER_URL}/turma/listar/${page}`);
   }
 
-  getProfessoresBusca(nome) {
-    return this.http.get(`${SERVER_URL}/professor/buscar/${nome}`);
+  getTurmasBusca(nome) {
+    return this.http.get(`${SERVER_URL}/turma/buscar/${nome}`);
   }
 
+  getTurma(id) {
+    return this.http.get(`${SERVER_URL}/turma/${id}`);
+  }
 }
