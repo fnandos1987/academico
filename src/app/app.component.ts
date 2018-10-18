@@ -19,7 +19,7 @@ export class AppComponent {
     },
     {
       title: 'Nova Turma',
-      url: '/list',
+      url: '/protected/turma-edit',
       icon: 'md-add-circle'
     },
     {

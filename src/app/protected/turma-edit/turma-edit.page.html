@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>turma-edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form" (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-input type="text" formControlName="nome" placeholder="Nome da Turma"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea formControlName="ementa" placeholder="Ementa"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-datetime formControlName="dataIni" display-format="DD/MM/YYYY" placeholder="Data Início"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-datetime formControlName="dataFim" display-format="DD/MM/YYYY" placeholder="Data Final"></ion-datetime>
+    </ion-item>
+    <ion-button type="submit" [disabled]="!form.valid">Submit</ion-button>
+  </form>
+</ion-content>

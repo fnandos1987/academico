@@ -27,7 +27,7 @@ export class TurmaDetailPage implements OnInit {
 
   editaTurma() {
     this.turmaService.id = this.turma.id;
-    this.router.navigate(['/turma-detail-edit']);
+    this.router.navigate(['/turma-edit']);
   }
 
   excluirTurma() {

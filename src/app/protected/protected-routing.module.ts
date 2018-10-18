@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'configuracao', loadChildren: './configuracao/configuracao.module#ConfiguracaoPageModule' },
   { path: 'sair', loadChildren: './sair/sair.module#SairPageModule' },
   { path: 'turma', loadChildren: './turma/turma.module#TurmaPageModule' },
-  { path: 'turma-detail', loadChildren: './turma-detail/turma-detail.module#TurmaDetailPageModule' }
+  { path: 'turma-detail', loadChildren: './turma-detail/turma-detail.module#TurmaDetailPageModule' },
+  { path: 'turma-edit', loadChildren: './turma-edit/turma-edit.module#TurmaEditPageModule' }
 ];
 
 @NgModule({
