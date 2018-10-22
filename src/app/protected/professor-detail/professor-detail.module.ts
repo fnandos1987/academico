@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TurmaDetailPage } from './turma-detail.page';
+import { ProfessorDetailPage } from './professor-detail.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: TurmaDetailPage
+    component: ProfessorDetailPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [TurmaDetailPage]
+  declarations: [ProfessorDetailPage]
 })
-export class TurmaDetailPageModule {}
+export class ProfessorDetailPageModule {}

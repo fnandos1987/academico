@@ -1,31 +1,33 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        Configurações
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Configurações
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content padding>
 
-  <ion-item>
-    <ion-input type="text" placeholder="Nome do Usuário" [(ngModel)]="user.nome" name="nome" required></ion-input>
-  </ion-item>
+  <form [formGroup]="form" (ngSubmit)="alterarUsuario()">
+    <ion-item>
+      <ion-input type="text" placeholder="Nome do Usuário" formControlName="nome" name="nome"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-select placeholder="Idioma do Usuário" [(ngModel)]="user.idioma" cancelText="Cancelar" okText="Selecionar">
-      <ion-select-option value="en_US">Inglês(EUA)</ion-select-option>
-      <ion-select-option value="pt_BR">Português(Brasil)</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-select placeholder="Idioma do Usuário" formControlName="idioma" cancelText="Cancelar" okText="Selecionar">
+        <ion-select-option value="en_US">Inglês(EUA)</ion-select-option>
+        <ion-select-option value="pt_BR">Português(Brasil)</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-row>
-    <ion-col>
-      <ion-button (click)="alterarUsuario()">Salvar</ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" [disabled]="!form.valid">Salvar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 </ion-content>

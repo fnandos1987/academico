@@ -24,6 +24,10 @@ export class ProfessorPage implements OnInit {
     this.getProfessores();
   }
 
+  novoProfessor() {
+    
+  }
+
   doInfinite(event) {
     setTimeout(() => {
       this.page += 1;

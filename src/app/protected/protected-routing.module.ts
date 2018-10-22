@@ -6,9 +6,7 @@ const routes: Routes = [
   { path: 'professor', loadChildren: './professor/professor.module#ProfessorPageModule' },
   { path: 'configuracao', loadChildren: './configuracao/configuracao.module#ConfiguracaoPageModule' },
   { path: 'sair', loadChildren: './sair/sair.module#SairPageModule' },
-  { path: 'turma', loadChildren: './turma/turma.module#TurmaPageModule' },
-  { path: 'turma-detail', loadChildren: './turma-detail/turma-detail.module#TurmaDetailPageModule' },
-  { path: 'turma-edit', loadChildren: './turma-edit/turma-edit.module#TurmaEditPageModule' }
+  { path: 'professor-detail', loadChildren: './professor-detail/professor-detail.module#ProfessorDetailPageModule' }
 ];
 
 @NgModule({

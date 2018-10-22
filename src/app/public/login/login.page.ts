@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AlertController } from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 const SERVER_URL = environment.serverUrl;
 
@@ -13,25 +14,30 @@ const SERVER_URL = environment.serverUrl;
 })
 export class LoginPage implements OnInit {
 
-  registerCredentials = { login: '', pass: '' };
+  private form: FormGroup;
   alertPrompt;
 
   constructor(private authService: AuthenticationService,
               private http: HttpClient,
+              private formBuilder: FormBuilder,
               public alertController: AlertController) { }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      login: ['', Validators.required],
+      pass: ['', Validators.required]
+    }); 
   }
 
   login() {
-    this.http.post(`${SERVER_URL}/usuario/logar`, this.registerCredentials)
+    this.http.post(`${SERVER_URL}/usuario/logar`, this.form.value)
       .toPromise()
       .then(response => {
         if (response) {
           this.authService.login(response);
         } else {
           this.presentAlert('Login não realizado', 'Não foi possível realizar a autenticação. Digite novamente seu usuário e senha.');
-        }        
+        }
       })
       .catch(err => {
         this.presentAlert('Ops!', 'Aparentemente estamos com probemas na conexão com o servidor. Tente novamente mais tarde');
@@ -39,9 +45,9 @@ export class LoginPage implements OnInit {
   }
 
   verificarEmail(email) {
-    this.http.post(`${SERVER_URL}/usuario/novasenha`, {email: email})
+    this.http.post(`${SERVER_URL}/usuario/novasenha`, { email: email })
       .toPromise()
-      .then(response => {       
+      .then(response => {
         if (response) {
           this.alertPrompt.dismiss();
           this.presentAlert('Nova senha enviada', 'Sua nova senha foi enviada para seu email com sucesso.');

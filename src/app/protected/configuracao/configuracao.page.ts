@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 const SERVER_URL = environment.serverUrl;
 const TOKEN_KEY = 'auth-token';
@@ -14,19 +15,25 @@ const TOKEN_KEY = 'auth-token';
 })
 export class ConfiguracaoPage implements OnInit {
 
-    user = { id: null, nome: null, idioma: null };
+    private form: FormGroup;
 
     constructor(private http: HttpClient,
+                private formBuilder: FormBuilder,
                 private toastCtrl: ToastController,
                 private storage: Storage) { }
 
     ngOnInit() {
+        this.form = this.formBuilder.group({
+            nome: ['', Validators.required],
+            idioma: ['', Validators.required]
+          }); 
     }
 
     alterarUsuario() {
         this.storage.get(TOKEN_KEY).then((val) => {
-            this.user.id = val;
-            this.http.put(`${SERVER_URL}/usuario/alterar`, this.user)
+            let user = this.form.value;
+            user.id = val;
+            this.http.put(`${SERVER_URL}/usuario/alterar`, user)
                 .toPromise()
                 .then(response => {
                     if (response) {

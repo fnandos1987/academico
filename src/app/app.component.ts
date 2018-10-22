@@ -18,16 +18,6 @@ export class AppComponent {
       icon: 'md-person-add'
     },
     {
-      title: 'Nova Turma',
-      url: '/protected/turma-edit',
-      icon: 'md-add-circle'
-    },
-    {
-      title: 'Lista de Turmas',
-      url: '/protected/turma',
-      icon: 'list'
-    },
-    {
       title: 'Lista de Professores',
       url: '/protected/professor',
       icon: 'list'
@@ -69,4 +59,5 @@ export class AppComponent {
 
     });
   }
+
 }
