@@ -1,9 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>professor-detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-title>
+        Detalhes de Professor
+      </ion-title>
+      <ion-button slot="end" buttonType="bar-button" (click)="editaprofessor()">
+        <ion-icon slot="icon-only" name="create"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-row>
+        <ion-col>
+          <ion-img style="width: 60px; height: 60px;" src="{{professor.foto}}" (click)="presentActionSheet()"></ion-img>
+        </ion-col>
+        <ion-col>
+          {{professor.nome}}
+        </ion-col>
+        <ion-col *ngIf="professor.status == 1">
+          <ion-icon name="star" md="md-checkmark-circle-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Data de Nascimento: {{professor.data_nascto}}</p>
+      <p>{{professor.curriculo}}</p>
+    </ion-card-content>
+    <ion-button (click)="presentAlertConfirm()">Excluir</ion-button>
+  </ion-card>
 
 </ion-content>

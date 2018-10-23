@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Editando Professor
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+
+    <ion-input type="hidden" formControlName="id" name="id"></ion-input>
+
+    <ion-item>
+      <ion-input type="text" placeholder="Nome do Professor" formControlName="nome" name="nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Data de Nascimento</ion-label>
+      <ion-input type="text" placeholder="Data de Nascimento" formControlName="data_nascto" name="data_nascto"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Ativo</ion-label>
+      <ion-toggle formControlName="status"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="Curriculo" formControlName="curriculo" name="curriculo"></ion-textarea>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" [disabled]="!form.valid">Salvar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

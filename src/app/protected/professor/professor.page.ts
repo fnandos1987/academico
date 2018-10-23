@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Professor } from '../../model/professor';
 import { ProfessorService } from '../../services/professor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-professor',
@@ -12,7 +13,7 @@ export class ProfessorPage implements OnInit {
   professores;
   page;
 
-  constructor(private profService: ProfessorService) { }
+  constructor(private profService: ProfessorService, private router: Router) { }
 
   ngOnInit() {
     this.onLoadListaProfessores();
@@ -26,6 +27,11 @@ export class ProfessorPage implements OnInit {
 
   novoProfessor() {
     
+  }
+
+  showProfessorDetail(id) {
+    this.profService.id = id;
+    this.router.navigate(['/protected/professor-detail']);
   }
 
   doInfinite(event) {

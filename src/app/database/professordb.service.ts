@@ -60,8 +60,7 @@ export class ProfessordbService {
             if (data.rows.length > 0) {
               let professores: any[] = [];
               for (var i = 0; i < data.rows.length; i++) {
-                var professor = data.rows.item(i);
-                professores.push(professor);
+                professores.push(data.rows.item(i));
               }
               return professores;
             } else {
@@ -87,7 +86,7 @@ export class ProfessordbService {
               professor.id = item.id;
               professor.nome = item.nome;
               professor.data_nascto = item.data_nascto;
-              professor.foto = SERVER_URL+item.foto;
+              professor.foto = SERVER_URL + item.foto;
               professor.curriculo = item.curriculo;
               professor.status = item.status;
               return professor;
@@ -97,6 +96,22 @@ export class ProfessordbService {
           .catch((e) => console.error(e));
       })
       .catch((e) => console.error(e));
+  }
+
+  loadProfessores(professores) {
+    this.dataBase.getDB().
+      then((db: SQLiteObject) => {
+        let commands = [];
+        for (let i in professores) {
+          commands.push(['insert into professor (nome, data_nascto, foto, curriculo, status) values (?, ?, ?, ?, ?)', professores[i]]);
+        }
+
+        db.sqlBatch(commands)
+          .then(() => console.log('Dados padrões incluídos'))
+          .catch(e => console.error('Erro ao incluir dados padrões', e));
+
+      })
+      .catch(e => console.error('Erro', e));
   }
 
 }
