@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DatabaseService } from './database.service';
+import { SqliteService } from './sqlite.service';
 import { Professor } from '../model/professor';
-import { SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { environment } from '../../environments/environment';
 
 const SERVER_URL = environment.serverUrl;
@@ -9,12 +9,12 @@ const SERVER_URL = environment.serverUrl;
 @Injectable({
   providedIn: 'root'
 })
-export class ProfessordbService {
+export class ProfesorsqlService {
 
-  constructor(private dataBase: DatabaseService) { }
+  constructor(private sqlite: SqliteService) { }
 
   insert(professor: Professor) {
-    return this.dataBase.getDB()
+    return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
         let sql = 'insert into professor (nome, data_nascto, foto, curriculo, status) values (?, ?, ?, ?, ?)';
         let data = [professor.nome, professor.data_nascto, professor.foto, professor.curriculo, professor.status ? 1 : 0];
@@ -26,7 +26,7 @@ export class ProfessordbService {
   }
 
   update(professor: Professor) {
-    return this.dataBase.getDB()
+    return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
         let sql = 'update professor set nome = ?, data_nascto = ?, curriculo = ?, status = ? where id = ?';
         let data = [professor.nome, professor.data_nascto, professor.curriculo, professor.status, professor.id];
@@ -38,7 +38,7 @@ export class ProfessordbService {
   }
 
   remove(id: number) {
-    return this.dataBase.getDB()
+    return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
         let sql = 'delete from professor where id = ?';
         let data = [id];
@@ -50,7 +50,7 @@ export class ProfessordbService {
   }
 
   getPagedList(page: number) {
-    return this.dataBase.getDB()
+    return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
         let sql = 'select * from professor limit ? offset ?';
         let data = [10, page * 10];
@@ -73,7 +73,7 @@ export class ProfessordbService {
   }
 
   getById(id: number) {
-    return this.dataBase.getDB()
+    return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
         let sql = 'select * from professor where id = ?';
         let data = [id];
@@ -99,7 +99,7 @@ export class ProfessordbService {
   }
 
   loadProfessores(professores) {
-    this.dataBase.getDB().
+    this.sqlite.getDb().
       then((db: SQLiteObject) => {
         let commands = [];
         for (let i in professores) {

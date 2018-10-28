@@ -26,12 +26,12 @@ export class ProfessorPage implements OnInit {
   }
 
   novoProfessor() {
-    
+    this.router.navigate(['protected', 'professor-new']);
   }
 
   showProfessorDetail(id) {
     this.profService.id = id;
-    this.router.navigate(['/protected/professor-detail']);
+    this.router.navigate(['protected', 'professor-detail']);
   }
 
   doInfinite(event) {

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SqliteService } from '../../database/sqlite.service';
 
 const SERVER_URL = environment.serverUrl;
 
@@ -20,13 +21,16 @@ export class LoginPage implements OnInit {
   constructor(private authService: AuthenticationService,
               private http: HttpClient,
               private formBuilder: FormBuilder,
+              private sqlite: SqliteService,
               public alertController: AlertController) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       login: ['', Validators.required],
       pass: ['', Validators.required]
-    }); 
+    });
+    
+    this.sqlite.createTables();
   }
 
   login() {

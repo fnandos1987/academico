@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfessorService } from '../../services/professor.service';
 import { Router } from '@angular/router';
 import { AlertController, ActionSheetController } from '@ionic/angular';
-import { Professor } from '../../model/professor';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -13,17 +13,20 @@ import { environment } from '../../../environments/environment';
 export class ProfessorDetailPage implements OnInit {
 
   professor;
+  photo: string = '';
+
   constructor(private professorService: ProfessorService,
               private router: Router,
               private alertController: AlertController,
-              private actionSheetController: ActionSheetController) { }
+              private actionSheetController: ActionSheetController,
+              private camera: Camera) { }
 
   ngOnInit() {
     this.carrega(this.professorService.id);
   }
 
-  carrega(id) {
-    this.professorService.getProfessor(id).subscribe(obj => {
+  async carrega(id) {
+    await this.professorService.getProfessor(id).subscribe(obj => {
       this.professor = obj;
       this.professor.foto = environment.serverUrl + this.professor.foto;
     })
@@ -36,6 +39,26 @@ export class ProfessorDetailPage implements OnInit {
 
   excluirprofessor() {
     console.log(this.professor.id);
+  }
+
+  tirarFoto() {
+    this.photo = '';
+    
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+  }
+  this
+      .camera
+      .getPicture(options)
+      .then((imageData) => {
+          let base64Image = 'data:image/jpeg;base64,' + imageData;
+          console.log('imagem', base64Image);
+      }, (err) => {
+          console.log(err);
+      });
   }
 
   async presentAlertConfirm() {
@@ -72,7 +95,7 @@ export class ProfessorDetailPage implements OnInit {
       }, {
         text: 'Tirar foto usando a câmera',
         handler: () => {
-          console.log('Share clicked');
+          this.tirarFoto();
         }
       }, {
         text: 'Colocar avatar padrão',

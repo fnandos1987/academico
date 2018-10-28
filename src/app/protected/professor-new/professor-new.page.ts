@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProfessorService } from '../../services/professor.service';
 
 @Component({
-  selector: 'app-professor-edit',
-  templateUrl: './professor-edit.page.html',
-  styleUrls: ['./professor-edit.page.scss'],
+  selector: 'app-professor-new',
+  templateUrl: './professor-new.page.html',
+  styleUrls: ['./professor-new.page.scss'],
 })
-export class ProfessorEditPage implements OnInit {
+export class ProfessorNewPage implements OnInit {
 
   private form: FormGroup;
   constructor(private professorService: ProfessorService, private formBuilder: FormBuilder) { }
@@ -21,16 +21,6 @@ export class ProfessorEditPage implements OnInit {
       curriculo: ['', Validators.required],
       status : []
     });
-
-    if (this.professorService.id != null) {
-      this.carrega(this.professorService.id);
-    }
-  }
-
-  carrega(id) {
-    this.professorService.getProfessor(id).subscribe(obj => {
-      this.form.setValue(obj);
-    })
   }
 
   salvar() {

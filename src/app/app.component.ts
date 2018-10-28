@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
-import { DatabaseService } from './database/database.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Novo Professor',
-      url: '/home',
+      url: '/protected/professor-new',
       icon: 'md-person-add'
     },
     {

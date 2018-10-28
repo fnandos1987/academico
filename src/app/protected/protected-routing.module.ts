@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'configuracao', loadChildren: './configuracao/configuracao.module#ConfiguracaoPageModule' },
   { path: 'sair', loadChildren: './sair/sair.module#SairPageModule' },
   { path: 'professor-detail', loadChildren: './professor-detail/professor-detail.module#ProfessorDetailPageModule' },
-  { path: 'professor-edit', loadChildren: './professor-edit/professor-edit.module#ProfessorEditPageModule' }
+  { path: 'professor-edit', loadChildren: './professor-edit/professor-edit.module#ProfessorEditPageModule' },
+  { path: 'professor-new', loadChildren: './professor-new/professor-new.module#ProfessorNewPageModule' }
 ];
 
 @NgModule({
