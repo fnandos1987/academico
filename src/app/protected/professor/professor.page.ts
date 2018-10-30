@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Professor } from '../../model/professor';
 import { ProfessorService } from '../../services/professor.service';
 import { Router } from '@angular/router';
+import { ProfesorsqlService } from '../../database/profesorsql.service';
 
 @Component({
   selector: 'app-professor',
@@ -13,7 +13,9 @@ export class ProfessorPage implements OnInit {
   professores;
   page;
 
-  constructor(private profService: ProfessorService, private router: Router) { }
+  constructor(private profDb: ProfesorsqlService,
+              private professorService: ProfessorService,
+              private router: Router) { }
 
   ngOnInit() {
     this.onLoadListaProfessores();
@@ -30,7 +32,7 @@ export class ProfessorPage implements OnInit {
   }
 
   showProfessorDetail(id) {
-    this.profService.id = id;
+    this.profDb.id = id;
     this.router.navigate(['protected', 'professor-detail']);
   }
 
@@ -45,8 +47,9 @@ export class ProfessorPage implements OnInit {
   onInputSearch(event) {
     const val = event.target.value;    
     if (val && val.trim() != '') {
-      this.profService.getProfessoresBusca(val)
-        .subscribe(data => {
+      this.profDb.getByName(val)
+        .then((data: any[]) => {
+          this.professores = [];
           this.professores = data;
         })
     } else {
@@ -54,13 +57,14 @@ export class ProfessorPage implements OnInit {
     }
   }
 
-  getProfessores() {
-    this.profService.getProfessores(this.page)
-      .subscribe(data => {
-        for (let i in data) {
-          this.professores.push(data[i]);          
-        }
+  async getProfessores() {
+      await this.profDb.getPagedList(this.page)
+      .then((data: any[]) => {
+        this.professores = data;
       })
+      .catch((err) =>{
+        console.log(err);
+      });
   }
 
 }

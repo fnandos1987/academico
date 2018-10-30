@@ -5,6 +5,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SqliteService } from '../../database/sqlite.service';
+import { ProfesorsqlService } from '../../database/profesorsql.service';
+import { ProfessorService } from '../../services/professor.service';
 
 const SERVER_URL = environment.serverUrl;
 
@@ -22,6 +24,8 @@ export class LoginPage implements OnInit {
               private http: HttpClient,
               private formBuilder: FormBuilder,
               private sqlite: SqliteService,
+              private profDb: ProfesorsqlService,
+              private professor: ProfessorService,
               public alertController: AlertController) { }
 
   ngOnInit() {
@@ -33,12 +37,19 @@ export class LoginPage implements OnInit {
     this.sqlite.createTables();
   }
 
-  login() {
+  carregaBase() {
+    this.professor.list().subscribe(data => {
+      this.profDb.loadProfessores(data);
+    });
+  }
+
+  login() {    
+    this.carregaBase();
     this.http.post(`${SERVER_URL}/usuario/logar`, this.form.value)
       .toPromise()
       .then(response => {
-        if (response) {
-          this.authService.login(response);
+        if (response) {          
+          this.authService.login(response);          
         } else {
           this.presentAlert('Login não realizado', 'Não foi possível realizar a autenticação. Digite novamente seu usuário e senha.');
         }

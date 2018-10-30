@@ -16,9 +16,8 @@
   <ion-card>
     <ion-card-header>
       <ion-row>
-        <ion-col>
-          <ion-img style="width: 60px; height: 60px;" src="{{professor.foto}}" (click)="presentActionSheet()"></ion-img>
-          <img src="{{ photo }}" />
+        <ion-col>          
+          <img id="avatar" style="width: 60px; height: 60px;" src="{{professor.foto}}" click="presentActionSheet()"/>
         </ion-col>
         <ion-col>
           {{professor.nome}}

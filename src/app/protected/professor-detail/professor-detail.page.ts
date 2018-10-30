@@ -3,7 +3,7 @@ import { ProfessorService } from '../../services/professor.service';
 import { Router } from '@angular/router';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { environment } from '../../../environments/environment';
+import { ProfesorsqlService } from '../../database/profesorsql.service';
 
 @Component({
   selector: 'app-professor-detail',
@@ -12,50 +12,54 @@ import { environment } from '../../../environments/environment';
 })
 export class ProfessorDetailPage implements OnInit {
 
-  professor;
+  professor: any = {};
   photo: string = '';
 
   constructor(private professorService: ProfessorService,
+              private profDb: ProfesorsqlService,
               private router: Router,
               private alertController: AlertController,
               private actionSheetController: ActionSheetController,
               private camera: Camera) { }
 
   ngOnInit() {
-    this.carrega(this.professorService.id);
+    this.carrega(this.profDb.id);
   }
 
   async carrega(id) {
-    await this.professorService.getProfessor(id).subscribe(obj => {
-      this.professor = obj;
-      this.professor.foto = environment.serverUrl + this.professor.foto;
-    })
+    await this.profDb.getById(id).then(data => {
+      this.professor = data;
+    });
   }
 
   editaprofessor() {
-    this.professorService.id = this.professor.id;
+    this.profDb.id = this.professor.id;
     this.router.navigate(['protected', 'professor-edit']);
   }
 
   excluirprofessor() {
-    console.log(this.professor.id);
+    this.profDb.remove(this.professor.id);
+    this.router.navigate(['protected', 'professor']);
   }
 
-  tirarFoto() {
+  tirarFoto(pictureSource) {
     this.photo = '';
     
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: pictureSource
   }
   this
       .camera
       .getPicture(options)
       .then((imageData) => {
           let base64Image = 'data:image/jpeg;base64,' + imageData;
-          console.log('imagem', base64Image);
+          
+          let cameraImageSelector = document.getElementById('avatar');
+          cameraImageSelector.setAttribute('src', base64Image);
       }, (err) => {
           console.log(err);
       });
@@ -90,12 +94,12 @@ export class ProfessorDetailPage implements OnInit {
       buttons: [{
         text: 'Carregar foto da galeria',
         handler: () => {
-          console.log('Delete clicked');
+          this.tirarFoto(this.camera.PictureSourceType.PHOTOLIBRARY);
         }
       }, {
         text: 'Tirar foto usando a câmera',
         handler: () => {
-          this.tirarFoto();
+          this.tirarFoto(this.camera.PictureSourceType.CAMERA);
         }
       }, {
         text: 'Colocar avatar padrão',
