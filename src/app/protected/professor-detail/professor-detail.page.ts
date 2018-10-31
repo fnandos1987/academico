@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ProfesorsqlService } from '../../database/profesorsql.service';
+import { environment } from '../../../environments/environment';
+
+const SERVER_URL = environment.serverUrl;
 
 @Component({
   selector: 'app-professor-detail',
@@ -29,6 +32,7 @@ export class ProfessorDetailPage implements OnInit {
   async carrega(id) {
     await this.profDb.getById(id).then(data => {
       this.professor = data;
+      this.photo = data[0].foto;
     });
   }
 
@@ -58,11 +62,14 @@ export class ProfessorDetailPage implements OnInit {
       .then((imageData) => {
           let base64Image = 'data:image/jpeg;base64,' + imageData;
           
-          let cameraImageSelector = document.getElementById('avatar');
-          cameraImageSelector.setAttribute('src', base64Image);
+          this.photo = base64Image;
       }, (err) => {
           console.log(err);
       });
+  }
+
+  chumbaAvatar() {
+    this.photo = SERVER_URL + "\public\imgs\ghost_person.png";
   }
 
   async presentAlertConfirm() {
@@ -104,7 +111,7 @@ export class ProfessorDetailPage implements OnInit {
       }, {
         text: 'Colocar avatar padrão',
         handler: () => {
-          console.log('Play clicked');
+          this.chumbaAvatar();
         }
       }, {
         text: 'Cancelar',

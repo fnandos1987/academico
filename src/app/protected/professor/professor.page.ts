@@ -57,14 +57,11 @@ export class ProfessorPage implements OnInit {
     }
   }
 
-  async getProfessores() {
-      await this.profDb.getPagedList(this.page)
-      .then((data: any[]) => {
-        this.professores = data;
-      })
-      .catch((err) =>{
-        console.log(err);
-      });
+  getProfessores() {
+    this.profDb.getPagedList(this.page)
+    .then((data) =>{
+      this.professores = data;
+    });
   }
 
 }
