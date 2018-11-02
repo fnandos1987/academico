@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { throwError, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 const SERVER_URL = environment.serverUrl;
 
@@ -14,20 +14,44 @@ export class ProfessorService {
   id: number;
   constructor(public http: HttpClient) { }
 
-  list () {
-    return this.http.get(`${SERVER_URL}/professor`);
+  private handleError(error: HttpErrorResponse) {
+    return throwError('Aparentemente estamos com um problema de comunicação com o servidor. Tente novamente mais tarde');
   }
 
-  getProfessores(page) {
-    return this.http.get(`${SERVER_URL}/professor/listar/${page}`);
+  private extractData(res: Response) {
+    let body = res;
+    return body || {};
   }
 
-  getProfessoresBusca(nome) {
-    return this.http.get(`${SERVER_URL}/professor/buscar/${nome}`);
+  private getProfessorAsObject(obj) {
+    return { professor: obj };
   }
 
-  getProfessor(id) {
-    return this.http.get(`${SERVER_URL}/professor/${id}`);
+  list(): Observable<any> {
+    return this.http.get(`${SERVER_URL}/professor`).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
+  insert(professor): Observable<any> {
+    return this.http.post(`${SERVER_URL}/professor/novo`, this.getProfessorAsObject(professor))
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  update(professor): Observable<any> {
+    return this.http.put(`${SERVER_URL}/professor/alterar`, this.getProfessorAsObject(professor))
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  delete(id): Observable<any> {
+    return this.http.delete(`${SERVER_URL}/professor/delete/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
 }
