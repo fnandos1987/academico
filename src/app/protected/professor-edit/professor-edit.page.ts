@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProfessorService } from '../../services/professor.service';
 import { ProfesorsqlService } from '../../database/profesorsql.service';
 
 @Component({
@@ -11,8 +10,7 @@ import { ProfesorsqlService } from '../../database/profesorsql.service';
 export class ProfessorEditPage implements OnInit {
 
   private form: FormGroup;
-  constructor(private professorService: ProfessorService, 
-              private profDb: ProfesorsqlService,
+  constructor(private profDb: ProfesorsqlService,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {

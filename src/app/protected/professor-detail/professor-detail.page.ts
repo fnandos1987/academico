@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfessorService } from '../../services/professor.service';
 import { Router } from '@angular/router';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -18,8 +17,7 @@ export class ProfessorDetailPage implements OnInit {
   professor: any = {};
   photo: string = '';
 
-  constructor(private professorService: ProfessorService,
-              private profDb: ProfesorsqlService,
+  constructor(private profDb: ProfesorsqlService,
               private router: Router,
               private alertController: AlertController,
               private actionSheetController: ActionSheetController,
@@ -60,16 +58,17 @@ export class ProfessorDetailPage implements OnInit {
       .camera
       .getPicture(options)
       .then((imageData) => {
-          let base64Image = 'data:image/jpeg;base64,' + imageData;
-          
+          let base64Image = 'data:image/jpeg;base64,' + imageData;          
           this.photo = base64Image;
+          this.profDb.updateFoto(this.professor.id, base64Image);
       }, (err) => {
           console.log(err);
       });
   }
 
   chumbaAvatar() {
-    this.photo = SERVER_URL + "\public\imgs\ghost_person.png";
+    this.photo = SERVER_URL + '/public/imgs/ghost_person.png';
+    this.profDb.updateFoto(this.professor.id, '/public/imgs/ghost_person.png');
   }
 
   async presentAlertConfirm() {
@@ -116,9 +115,7 @@ export class ProfessorDetailPage implements OnInit {
       }, {
         text: 'Cancelar',
         role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
+        handler: () => { }
       }]
     });
     await actionSheet.present();

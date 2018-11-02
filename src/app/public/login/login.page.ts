@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SqliteService } from '../../database/sqlite.service';
 import { ProfesorsqlService } from '../../database/profesorsql.service';
 import { ProfessorService } from '../../services/professor.service';
+import { SessionService } from '../../services/session.service';
 
 const SERVER_URL = environment.serverUrl;
 
@@ -21,6 +22,7 @@ export class LoginPage implements OnInit {
   alertPrompt;
 
   constructor(private authService: AuthenticationService,
+              private sessionService: SessionService,
               private http: HttpClient,
               private formBuilder: FormBuilder,
               private sqlite: SqliteService,
@@ -49,6 +51,7 @@ export class LoginPage implements OnInit {
       .toPromise()
       .then(response => {
         if (response) {          
+          this.sessionService.initSession();
           this.authService.login(response);          
         } else {
           this.presentAlert('Login não realizado', 'Não foi possível realizar a autenticação. Digite novamente seu usuário e senha.');

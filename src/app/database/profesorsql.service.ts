@@ -38,6 +38,18 @@ export class ProfesorsqlService {
       .catch((e) => console.error(e));
   }
 
+  updateFoto(id, foto) {
+    return this.sqlite.getDb()
+      .then((db: SQLiteObject) => {
+        let sql = 'update professor set foto = ? where id = ?';
+        let data = [foto, id];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
   remove(id: number) {
     return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
