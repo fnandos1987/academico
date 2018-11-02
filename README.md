@@ -10,6 +10,6 @@ Antes de executar o build alterar a variável de ambiente 'serverUrl' com endere
 
 Usuários de teste:
 
-login: fernando  passoword: fernando
+login: fernando  senha: fernando
 
-login: usuario  passoword: 123456
+login: usuario  senha: 123456
