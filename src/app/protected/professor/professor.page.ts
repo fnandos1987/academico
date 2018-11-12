@@ -14,8 +14,8 @@ export class ProfessorPage implements OnInit {
   page;
 
   constructor(private profDb: ProfesorsqlService,
-              private professorService: ProfessorService,
-              private router: Router) { }
+    private professorService: ProfessorService,
+    private router: Router) { }
 
   ngOnInit() {
     this.onLoadListaProfessores();
@@ -44,8 +44,22 @@ export class ProfessorPage implements OnInit {
     }, 500);
   }
 
+  doRefresh(event) {
+    setTimeout(() => {
+      //this.profDb.limpaProfessores();
+      this.profDb.loadProfessores(this.professorService.list());
+      this.profDb.getPagedList(this.page)
+        .then((data) => {
+          this.professores = [];
+          this.professores = data;
+          event.target.complete();
+        });
+      
+    }, 2000);
+  }
+
   onInputSearch(event) {
-    const val = event.target.value;    
+    const val = event.target.value;
     if (val && val.trim() != '') {
       this.profDb.getByName(val)
         .then((data: any[]) => {
@@ -59,9 +73,9 @@ export class ProfessorPage implements OnInit {
 
   getProfessores() {
     this.profDb.getPagedList(this.page)
-    .then((data) =>{
-      this.professores = data;
-    });
+      .then((data) => {
+        this.professores = data;
+      });
   }
 
 }

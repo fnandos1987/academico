@@ -14,7 +14,7 @@ export class ProfessorService {
   id: number;
   constructor(public http: HttpClient) { }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError() {
     return throwError('Aparentemente estamos com um problema de comunicação com o servidor. Tente novamente mais tarde');
   }
 
@@ -33,25 +33,28 @@ export class ProfessorService {
       catchError(this.handleError));
   }
 
-  insert(professor): Observable<any> {
+  insert(professor) {
     return this.http.post(`${SERVER_URL}/professor/novo`, this.getProfessorAsObject(professor))
-    .pipe(
-      catchError(this.handleError)
-    );
+      .toPromise()
+      .catch(() => {
+        this.handleError();
+      });
   }
 
-  update(professor): Observable<any> {
+  update(professor) {
     return this.http.put(`${SERVER_URL}/professor/alterar`, this.getProfessorAsObject(professor))
-    .pipe(
-      catchError(this.handleError)
-    );
+      .toPromise()
+      .catch(() => {
+        this.handleError();
+      });
   }
 
-  delete(id): Observable<any> {
+  delete(id) {
     return this.http.delete(`${SERVER_URL}/professor/delete/${id}`)
-    .pipe(
-      catchError(this.handleError)
-    );
+      .toPromise()
+      .catch(() => {
+        this.handleError();
+      });
   }
 
 }

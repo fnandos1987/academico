@@ -162,5 +162,16 @@ export class ProfesorsqlService {
       this.insert(professores[i]);
     }
   }
+  
+  limpaProfessores() {
+    return this.sqlite.getDb()
+      .then((db: SQLiteObject) => {
+        let sql = 'delete from professor';
+
+        return db.executeSql(sql, [])
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
 
 }

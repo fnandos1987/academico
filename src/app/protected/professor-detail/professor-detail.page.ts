@@ -4,6 +4,7 @@ import { AlertController, ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ProfesorsqlService } from '../../database/profesorsql.service';
 import { environment } from '../../../environments/environment';
+import { ProfessorService } from '../../services/professor.service';
 
 const SERVER_URL = environment.serverUrl;
 
@@ -18,6 +19,7 @@ export class ProfessorDetailPage implements OnInit {
   photo: string = '';
 
   constructor(private profDb: ProfesorsqlService,
+              private professorServ: ProfessorService,
               private router: Router,
               private alertController: AlertController,
               private actionSheetController: ActionSheetController,
@@ -41,6 +43,7 @@ export class ProfessorDetailPage implements OnInit {
 
   excluirprofessor() {
     this.profDb.remove(this.professor.id);
+    this.professorServ.delete(this.professor.id);
     this.router.navigate(['protected', 'professor']);
   }
 

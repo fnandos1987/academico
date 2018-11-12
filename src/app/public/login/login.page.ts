@@ -41,6 +41,7 @@ export class LoginPage implements OnInit {
 
   carregaBase() {
     this.professor.list().subscribe(data => {
+      this.profDb.limpaProfessores();
       this.profDb.loadProfessores(data);
     });
   }

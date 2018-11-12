@@ -28,7 +28,9 @@ export class ProfessorNewPage implements OnInit {
   }
 
   salvar() {
-    this.profDb.insert(this.form.value);
+    let professor = this.form.value
+    this.profDb.insert(professor);
+    this.professorService.insert(professor);
     this.router.navigate(['protected', 'professor']);
   }
 
