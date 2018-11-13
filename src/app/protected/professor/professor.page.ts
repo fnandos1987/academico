@@ -46,15 +46,18 @@ export class ProfessorPage implements OnInit {
 
   doRefresh(event) {
     setTimeout(() => {
-      //this.profDb.limpaProfessores();
-      this.profDb.loadProfessores(this.professorService.list());
-      this.profDb.getPagedList(this.page)
+      this.professorService.list()
+        .toPromise()
         .then((data) => {
-          this.professores = [];
-          this.professores = data;
-          event.target.complete();
-        });
-      
+          this.profDb.limpaProfessores();
+          this.profDb.loadProfessores(data);
+          this.profDb.getPagedList(this.page)
+            .then((data) => {
+              this.professores = [];
+              this.professores = data;
+              event.target.complete();
+            });
+        })
     }, 2000);
   }
 

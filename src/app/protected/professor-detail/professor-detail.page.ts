@@ -16,7 +16,6 @@ const SERVER_URL = environment.serverUrl;
 export class ProfessorDetailPage implements OnInit {
 
   professor: any = {};
-  photo: string = '';
 
   constructor(private profDb: ProfesorsqlService,
               private professorServ: ProfessorService,
@@ -32,7 +31,6 @@ export class ProfessorDetailPage implements OnInit {
   async carrega(id) {
     await this.profDb.getById(id).then(data => {
       this.professor = data;
-      this.photo = data[0].foto;
     });
   }
 
@@ -47,9 +45,7 @@ export class ProfessorDetailPage implements OnInit {
     this.router.navigate(['protected', 'professor']);
   }
 
-  tirarFoto(pictureSource) {
-    this.photo = '';
-    
+  tirarFoto(pictureSource) {    
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -62,7 +58,7 @@ export class ProfessorDetailPage implements OnInit {
       .getPicture(options)
       .then((imageData) => {
           let base64Image = 'data:image/jpeg;base64,' + imageData;          
-          this.photo = base64Image;
+          this.professor.foto = base64Image;
           this.profDb.updateFoto(this.professor.id, base64Image);
       }, (err) => {
           console.log(err);
@@ -70,8 +66,8 @@ export class ProfessorDetailPage implements OnInit {
   }
 
   chumbaAvatar() {
-    this.photo = SERVER_URL + '/public/imgs/ghost_person.png';
-    this.profDb.updateFoto(this.professor.id, '/public/imgs/ghost_person.png');
+    this.professor.foto = SERVER_URL + '/imgs/ghost_person.png';
+    this.profDb.updateFoto(this.professor.id, null);
   }
 
   async presentAlertConfirm() {

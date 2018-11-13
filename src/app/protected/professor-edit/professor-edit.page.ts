@@ -42,6 +42,7 @@ export class ProfessorEditPage implements OnInit {
     let professor = this.form.value
     this.profDb.update(professor);
     this.professorServ.update(professor);
+    this.profDb.id = professor.id;
     this.router.navigate(['protected', 'professor-detail']);
   }
 

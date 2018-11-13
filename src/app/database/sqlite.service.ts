@@ -38,7 +38,7 @@ export class SqliteService {
     this.getDb().then((db: SQLiteObject) => {
 
       db.sqlBatch([
-        ['CREATE TABLE IF NOT EXISTS professor ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome VARCHAR (100) NOT NULL, data_nascto DATE NOT NULL, foto VARCHAR (20), curriculo TEXT NOT NULL, status BOOLEAN NOT NULL)']      
+        ['CREATE TABLE IF NOT EXISTS professor ( id INTEGER PRIMARY KEY NOT NULL, nome VARCHAR (100) NOT NULL, data_nascto DATE NOT NULL, foto VARCHAR (20), curriculo TEXT NOT NULL, status BOOLEAN NOT NULL)']      
       ])
         .then(() => console.log('Tabela criada'))
         .catch(e => console.error('Erro ao criar as tabelas', e));

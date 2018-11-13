@@ -14,11 +14,25 @@ export class ProfesorsqlService {
   id: any;
   constructor(private sqlite: SqliteService) { }
 
+  private getNextId() {
+    return this.sqlite.getDb()
+    .then((db: SQLiteObject) => {
+      let sql = 'select max(id) + 1 from professor';
+
+      return db.executeSql(sql, [])
+        .catch((e) => console.error(e));
+    })
+  }
+
   insert(professor) {
     return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
-        let sql = 'insert into professor (nome, data_nascto, foto, curriculo, status) values (?, ?, ?, ?, ?)';
-        let data = [professor.nome, professor.data_nascto, professor.foto, professor.curriculo, professor.status ? 1 : 0];
+        if (professor.id == null) {
+          professor.id = this.getNextId();
+        }
+
+        let sql = 'insert into professor (id, nome, data_nascto, foto, curriculo, status) values (?, ?, ?, ?, ?, ?)';
+        let data = [professor.id, professor.nome, professor.data_nascto, professor.foto, professor.curriculo, professor.status ? 1 : 0];
 
         return db.executeSql(sql, data)
           .catch((e) => console.error(e));
@@ -100,7 +114,7 @@ export class ProfesorsqlService {
               professor.id = item.id;
               professor.nome = item.nome;
               professor.data_nascto = item.data_nascto;
-              professor.foto = SERVER_URL + item.foto;
+              professor.foto = item.foto == null ? SERVER_URL + '/imgs/ghost_person.png' : item.foto;
               professor.curriculo = item.curriculo;
               professor.status = item.status;
               return professor;
