@@ -16,12 +16,17 @@ export class ProfesorsqlService {
 
   private getNextId() {
     return this.sqlite.getDb()
-    .then((db: SQLiteObject) => {
-      let sql = 'select max(id) + 1 from professor';
+      .then((db: SQLiteObject) => {
+        let sql = 'select max(id) + 1 as id from professor';
 
-      return db.executeSql(sql, [])
-        .catch((e) => console.error(e));
-    })
+        return db.executeSql(sql, [])
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              return data.rows.item(0).id;
+            }
+          })
+          .catch((e) => console.error(e));
+      })
   }
 
   insert(professor) {
@@ -176,7 +181,7 @@ export class ProfesorsqlService {
       this.insert(professores[i]);
     }
   }
-  
+
   limpaProfessores() {
     return this.sqlite.getDb()
       .then((db: SQLiteObject) => {
